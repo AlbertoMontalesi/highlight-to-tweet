@@ -4,16 +4,32 @@ Highlight text and share it easily on twitter
 
 Inspired by [this](https://webflow.com/website/Highlight-text-to-Tweet-it)
 
+## Installation 
+
+Install using `npm i highlight-to-tweet`
+
+Import like this: `const highlight = require('highlight');`
+
+And use like this:
+
+```js
+highlight({
+    ...yoursettings
+});
+```
+
+&nbsp;
 
 ## Settings
 
+These are the allowed properties you can pass to override the default one
 ```js
  const settings = {
-    cssClassess: string[],
+    cssClassess: string[], // extra classed to add to the container if you want to style it yourself
     minLength: number,
     maxLength: number,
-    extra:string,
-    via: string,
+    extra:string, // extra text to append to the tweet
+    via: string, // your twitter handler
     popupArgs: string,
     callback: Function,
 }
