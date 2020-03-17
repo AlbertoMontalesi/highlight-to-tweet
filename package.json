@@ -1,6 +1,6 @@
 {
   "name": "highlight-to-tweet",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Highlight text and share it easily on twitter",
   "main": "script.js",
   "scripts": {
