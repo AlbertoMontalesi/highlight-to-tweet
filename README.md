@@ -8,7 +8,7 @@ Inspired by [this](https://webflow.com/website/Highlight-text-to-Tweet-it)
 
 Install using `npm i highlight-to-tweet`
 
-Import like this: `const highlight = require('highlight');`
+Import like this: `const highlight = require('highlight-to-tweet');`
 
 And use like this:
 
@@ -26,27 +26,11 @@ These are the allowed properties you can pass to override the default one
 ```js
  const settings = {
     cssClassess: string[], // extra classed to add to the container if you want to style it yourself
-    minLength: number,
-    maxLength: number,
+    maxLength: number, // max length allowed for the tweet
     extra:string, // extra text to append to the tweet
     via: string, // your twitter handler
-    popupArgs: string,
+    popupArgs: string, // define your custom popup
     callback: Function,
-}
-```
-
-Default configuration:
-
-```js
- const settings = {
-    node: "<a href='#'>Tweet</a>",
-    cssClassess: ['tweet-me'],
-    minLength: 1,
-    maxLength: 144 * 4,
-    extra: '',
-    via:null,
-    popupArgs:'width=400,height=400,toolbar=0,location=0',
-    callback: null,
 }
 ```
 
