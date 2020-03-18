@@ -1,22 +1,25 @@
+/*!
+ * Highligh to Tweet 
+ * https://github.com/AlbertoMontalesi/highlight-to-tweet
+ *
+ * Copyright 2020 Alberto Montalesi
+ * Released under the MIT license
+ */
 
-module.exports = (options) => {
+;module.exports = (options) => {
     document.addEventListener('DOMContentLoaded', () => {
 
-        window.tweetHighlighted = (options = null) => {
+        window.tweetHighlighted = (options = {}) => {
 
             const settings = {
                 node: options.node || "<a href='#'>Tweet</a>",
-                cssClassess: options.cssClassess || ['tweet-me'],
-                minLength: options.minLength || 1,
-                maxLength: options.maxLength || 144 * 4,
+                cssClassess: options.cssClassess || null,
                 extra: options.extra || '',
+                maxLength: options.maxLength || 280,    
                 via: options.via || null,
                 popupArgs: options.popArgs || 'width=400,height=400,toolbar=0,location=0',
                 callback: options.callback || null,
             }
-            // const classSelector = `.${settings.cssClassess.join('.')}`
-            // const element = document.querySelector(classSelector);
-
             const shareButton = document.createElement('div');
 
             shareButton.style.display = 'none';
@@ -42,7 +45,6 @@ module.exports = (options) => {
                 element.style.opacity = 1;
             }
 
-            // event that fires when any non-empty text is selected
             const onTextSelect = (classSelector, callback) => {
                 const getSelectedText = () => {
                     if (window.getSelection) {
@@ -53,7 +55,6 @@ module.exports = (options) => {
                     return '';
                 };
 
-                // fires the callback when text is selected
                 document.addEventListener('mouseup', (e) => {
                     var text = getSelectedText();
                     if (text !== '') {
@@ -75,12 +76,20 @@ module.exports = (options) => {
             };
             const getTweetURL = function (text, extra, via) {
                 var url = 'https://twitter.com/intent/tweet?text=';
-                url += encodeURIComponent(text);
+                // trim the text to fit in the max allowed 280 characters
+                const viaUrl = `&via=${via}`;
+                const maxLength = settings.maxLength > 280 ? 280 : settings.maxLength;
+                const maxAllowedLength = maxLength - viaUrl.length - extra.length;
+                let textToTweet = text;
+                if(text.length > maxAllowedLength){
+                    textToTweet = text.substring(0,maxAllowedLength -1);
+                }
+                url += encodeURIComponent(textToTweet);
                 if (extra)
                     url += encodeURIComponent(' ' + extra);
 
                 if (via)
-                    url += '&via=' + via;
+                    url += viaUrl
 
                 return url;
             };
@@ -88,8 +97,7 @@ module.exports = (options) => {
             onTextSelect(this, (e, text) => {
                 const btnExists = shareButton.style.display !== 'none';
 
-                if (btnExists || text.length > settings.maxLength
-                    || text.length < settings.minLength)
+                if (btnExists || !text.length)
                     return;
 
                 url = getTweetURL(text, settings.extra, settings.via);
@@ -103,7 +111,9 @@ module.exports = (options) => {
                 shareButton.innerHTML = '';
                 shareButton.innerHTML += settings.node;
                 shareButton.innerHTML += tweetIcon;
-                shareButton.classList.add(settings.cssClassess);
+                if(settings.cssClassess && settings.cssClassess.length){
+                    shareButton.classList.add(settings.cssClassess);
+                }
                 shareButton.style.top = `${e.pageY}px`;
                 shareButton.style.left = `${e.pageX}px`;
                 shareButton.style.position = 'absolute';
@@ -135,4 +145,3 @@ module.exports = (options) => {
     })
 
 }
-
