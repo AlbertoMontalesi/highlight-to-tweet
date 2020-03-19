@@ -27,7 +27,6 @@
                 e.preventDefault();
                 e.stopPropagation();
                 window.open(url, '_blank', settings.popupArgs);
-                //  Notify the callback function if defined
                 if (settings.callback != null) {
                     settings.callback(text);
                 }

@@ -4,7 +4,7 @@ Highlight text and share it easily on twitter
 
 Inspired by [this](https://webflow.com/website/Highlight-text-to-Tweet-it)
 
-## Installation 
+## Installation
 
 Install using `npm i highlight-to-tweet`
 
@@ -23,6 +23,7 @@ highlight({
 ## Settings
 
 These are the allowed properties you can pass to override the default one
+
 ```js
  const settings = {
     cssClassess: string[], // extra classed to add to the container if you want to style it yourself
